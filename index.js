@@ -137,27 +137,61 @@ start();
 
 //// Get All Token
 
-	// app.get("/get-all-token", async (req, res) => {
+	app.post("/getAllTokens", async (req, res) => {
 
-	// 	if (!req.headers["app-config-token"]) 
-	// 	{
-	// 		return res.status(401).json({ message: "Missing Authorization Header" });
-	// 	}
-	//      const { contactList, signer } = getConfig(req.headers["app-config-token"]);
-	// 	app.use(express.json());
-	// 	  try {
-	// 		const response = await contactList.methods
-	// 		  .getToken()
-	// 		  .call({from: signer.address});
-	// 		// console.log(tokenDecoded);
-	// 		//  console.log(signer);
-	// 		res.json(response);
-	// 	  } catch (error) {
-	// 		console.log(error);
+		if (!req.headers["auth-token"]) 
+		{
+		 	return res.status(401).json({ message: "Missing Authorization Header" });
+		}
+		else
+		{
+			const authTokenDecoded = decode(req.headers["auth-token"]);
 
-	// 	  }
+			if(!authToken == authTokenDecoded)
+			return res.status(401).json({ message: "Auth Token Mismatched" });
+
+			if (!req.body) return res.status(401).json({ message: "Body Missing" });;
+			const orchestrarData = req.body;
+			const configurationDataArray = orchestrarData.headers.authHeaders;
+
+			if(orchestrarData.headers.authHeaders[5].keyName == "InfuraNodeURL")
+			{
+				var InfuraNodeURL = orchestrarData.headers.authHeaders[5].keyValue;
+			}
+			else
+			{
+				return res.status(401).json({ message: "Missing InfuraNodeURL" });
+			}
+			if(orchestrarData.headers.authHeaders[3].keyName == "WalletPrivateKey")
+			{
+				var WalletPrivateKey = orchestrarData.headers.authHeaders[3].keyValue;
+			}
+			else
+			{
+				return res.status(401).json({ message: "Missing WalletPrivateKey" });
+			}
+			 
+			const { contactList, signer } = getConfig(WalletPrivateKey,InfuraNodeURL);
+			app.use(express.json());
+
+		}
+		const { contactList, signer } = getConfig(WalletPrivateKey,InfuraNodeURL);
+		app.use(express.json());
+
+
+		  try {
+			const response = await contactList.methods
+			  .getToken()
+			  .call({from: signer.address});
+			// console.log(tokenDecoded);
+			//  console.log(signer);
+			res.json(response);
+		  } catch (error) {
+			console.log(error);
+
+		  }
 			
-	// 	});
+		});
 
 
 		
