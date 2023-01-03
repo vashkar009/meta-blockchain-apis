@@ -3,15 +3,16 @@ const app = express();
 const cors = require('cors');
 const routes = require('./routes');
 var { encode, decode } = require("js-base64");
+const jwt_decode = require('jwt-decode');
 const Web3 = require('web3');
 var CONTACT_ABI = require("./ABI.json");
 var CONTACT_ADDRESS = require("./Address.json");
 const HDWalletProvider = require('@truffle/hdwallet-provider');
 app.use(cors());
 app.use(express.json());
-const authToken =  "152520643445d3ec37a7a4cb3f32eb2c";
+const authToken =  "77a5ad97-2213-4d6c-8ebc-7f16cca13df9";
 const getConfig = (WalletPrivateKey,InfuraNodeURL) => {
-	
+		
 
 	var mnemonic = WalletPrivateKey;
 	const provider =  new HDWalletProvider(mnemonic, InfuraNodeURL);
@@ -51,9 +52,11 @@ start();
 		}
 		else
 		{
-			const authTokenDecoded = decode(req.headers["auth-token"]);
+			const authTokenDecoded = jwt_decode(req.headers["auth-token"]);
+			const ApplcationUID = authTokenDecoded.ApplcationUID;
+			
 
-			if(!authToken == authTokenDecoded)
+			if(authToken != ApplcationUID)
 			return res.status(401).json({ message: "Auth Token Mismatched" });
 
 			if (!req.body) return res.status(401).json({ message: "Body Missing" });;
@@ -145,9 +148,11 @@ start();
 		}
 		else
 		{
-			const authTokenDecoded = decode(req.headers["auth-token"]);
+			const authTokenDecoded = jwt_decode(req.headers["auth-token"]);
+			const ApplcationUID = authTokenDecoded.ApplcationUID;
+			
 
-			if(!authToken == authTokenDecoded)
+			if(authToken != ApplcationUID)
 			return res.status(401).json({ message: "Auth Token Mismatched" });
 
 			if (!req.body) return res.status(401).json({ message: "Body Missing" });;
