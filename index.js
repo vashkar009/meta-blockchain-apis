@@ -61,18 +61,18 @@ start();
 
 			if (!req.body) return res.status(401).json({ message: "Body Missing" });;
 			const orchestrarData = req.body;
-			const configurationDataArray = orchestrarData.headers.authHeaders;
-            if(orchestrarData.headers.authHeaders[5].keyName == "InfuraNodeURL")
+			const configurationDataArray = orchestrarData.headers.applicationHeaders;
+            if(orchestrarData.headers.applicationHeaders[5].keyName == "InfuraNodeURL")
 			{
-				var InfuraNodeURL = orchestrarData.headers.authHeaders[5].keyValue;
+				var InfuraNodeURL = orchestrarData.headers.applicationHeaders[5].keyValue;
 			}
 			else
 			{
 				return res.status(401).json({ message: "Missing InfuraNodeURL" });
 			}
-			if(orchestrarData.headers.authHeaders[3].keyName == "WalletPrivateKey")
+			if(orchestrarData.headers.applicationHeaders[3].keyName == "WalletPrivateKey")
 			{
-				var WalletPrivateKey = orchestrarData.headers.authHeaders[3].keyValue;
+				var WalletPrivateKey = orchestrarData.headers.applicationHeaders[3].keyValue;
 			}
 			else
 			{
@@ -157,19 +157,19 @@ start();
 
 			if (!req.body) return res.status(401).json({ message: "Body Missing" });;
 			const orchestrarData = req.body;
-			const configurationDataArray = orchestrarData.headers.authHeaders;
+			const configurationDataArray = orchestrarData.headers.applicationHeaders;
 
-			if(orchestrarData.headers.authHeaders[5].keyName == "InfuraNodeURL")
+			if(orchestrarData.headers.applicationHeaders[5].keyName == "InfuraNodeURL")
 			{
-				var InfuraNodeURL = orchestrarData.headers.authHeaders[5].keyValue;
+				var InfuraNodeURL = orchestrarData.headers.applicationHeaders[5].keyValue;
 			}
 			else
 			{
 				return res.status(401).json({ message: "Missing InfuraNodeURL" });
 			}
-			if(orchestrarData.headers.authHeaders[3].keyName == "WalletPrivateKey")
+			if(orchestrarData.headers.applicationHeaders[3].keyName == "WalletPrivateKey")
 			{
-				var WalletPrivateKey = orchestrarData.headers.authHeaders[3].keyValue;
+				var WalletPrivateKey = orchestrarData.headers.applicationHeaders[3].keyValue;
 			}
 			else
 			{
