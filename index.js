@@ -53,10 +53,10 @@ start();
 		else
 		{
 			const authTokenDecoded = jwt_decode(req.headers["auth-token"]);
-			const ApplcationUID = authTokenDecoded.ApplcationUID;
+			const ApplicationUID = authTokenDecoded.ApplicationUID;
 			
 
-			if(authToken != ApplcationUID)
+			if(authToken != ApplicationUID)
 			return res.status(401).json({ message: "Auth Token Mismatched" });
 
 			if (!req.body) return res.status(401).json({ message: "Body Missing" });;
@@ -149,10 +149,10 @@ start();
 		else
 		{
 			const authTokenDecoded = jwt_decode(req.headers["auth-token"]);
-			const ApplcationUID = authTokenDecoded.ApplcationUID;
+			const ApplicationUID = authTokenDecoded.ApplicationUID;
 			
 
-			if(authToken != ApplcationUID)
+			if(authToken != ApplicationUID)
 			return res.status(401).json({ message: "Auth Token Mismatched" });
 
 			if (!req.body) return res.status(401).json({ message: "Body Missing" });;
